@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-image: url('https://images.pexels.com/photos/1387174/pexels-photo-1387174.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.9); /* Light transparent background */
+    max-width: 800px;
+    width: 100%;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+    margin: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #FF0055; /* Deep pinkish color */
+    margin-bottom: 1.5rem;
+}
+
+form label {
+    display: block;
+    margin-top: 1rem;
+    color: #333;
+    font-weight: bold;
+}
+
+form input,
+form select,
+form button {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+form select {
+    background-color: #fff;
+}
+
+form button {
+    background-color: #FF0055;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    margin-top: 1.5rem;
+}
+
+form button:hover {
+    background-color: #D6004A;
+}
+
+.results {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+    max-width: 800px;
+    width: 100%;
+    margin-top: 20px;
+    color: #333;
+}
+
+.results h2 {
+    font-size: 1.5rem;
+    color: #FF0055;
+    margin-bottom: 1rem;
+}
+
+.results ul {
+    list-style: none;
+    padding: 0;
+}
+
+.results li {
+    margin-bottom: 1rem;
+    background-color: #f8f8f8;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.results li strong {
+    color: #FF0055;
+}
+
+.back-home {
+    display: block;
+    margin-top: 20px;
+    color: #FF0055;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+}
+
+.back-home:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #333;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    width: 100%;
+    max-width: 800px;
+    border-radius: 10px;
+}
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hall Availability</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Event Management System</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="location">Select Location:</label>
+    <select id="location" name="location" required>
+        <option value="" disabled selected>Location</option>
+        {% for loc in locations %}
+        <option value="{{ loc }}" {% if loc == location %}selected{% endif %}>{{ loc }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="start_date">Start Date:</label>
+    <input type="date" name="start_date" id="start_date" value="{{ start_date }}" required>
+
+    <label for="start_time">Start Time:</label>
+    <input type="time" name="start_time" id="start_time" value="{{ start_time }}" required>
+
+    <label for="end_date">End Date:</label>
+    <input type="date" name="end_date" id="end_date" value="{{ end_date }}" required>
+
+    <label for="end_time">End Time:</label>
+    <input type="time" name="end_time" id="end_time" value="{{ end_time }}" required>
+
+    <button type="submit">Check Availability</button>
+</form>
+    </div>
+
+    {% if error_message %}
+    <p style="color: red; margin-top: 1rem;">{{ error_message }}</p>
+    {% endif %}
+
+    <div class="results">
+        {% if halls %}
+            <h2>Available Halls on {{ date }}</h2>
+            <ul>
+                {% for hall in halls %}
+                    <li>
+                        <strong>{{ hall.name }}</strong> - Capacity: {{ hall.capacity }} people
+                        <form method="get" action="{% url 'bookings:book_hall' hall_id=hall.id %}">
+                            <button type="submit">Book Hall</button>
+                        </form>
+                        
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No available halls for the selected date and location.</p>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'home' %}" class="back-home">Back to Home</a>
+    <footer>
+        <p>&copy; 2024 Event Management</p>
+    </footer>
+</body>
+</html>

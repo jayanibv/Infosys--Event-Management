@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #007bff;
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .form-container, .summary-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 48%;
+        }
+
+        .form-container h3, .summary-container h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .summary-container table {
+            width: 100%;
+            margin-bottom: 15px;
+            border-collapse: collapse;
+        }
+
+        .summary-container th, .summary-container td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        .success-message {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 1.5em;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="/">Home</a> / Checkout
+</div>
+
+<div class="container">
+    <!-- Basic Details Form -->
+    <div class="form-container">
+        <h3>Basic Details</h3>
+        <form method="POST" id="payment-form">
+            {% csrf_token %}
+            <input type="text" name="first_name" placeholder="First Name" required>
+            <input type="text" name="last_name" placeholder="Last Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="phone" placeholder="Phone" required>
+            <textarea name="address" rows="3" placeholder="Address" required></textarea>
+            <input type="text" name="city" placeholder="City" required>
+            <input type="text" name="state" placeholder="State" required>
+            <input type="text" name="country" placeholder="Country" required>
+            <input type="text" name="pincode" placeholder="Pin Code" required>
+            <h3>Payment Options</h3>
+            <div>
+                <input type="radio" id="cod" name="payment_method" value="cod" required>
+                <label for="cod">Cash on Delivery (COD)</label>
+            </div>
+            <div>
+                <input type="radio" id="credit_card" name="payment_method" value="credit_card" required>
+                <label for="credit_card">Credit Card</label>
+            </div>
+            <div id="credit-card-details" style="display: none;">
+                <input type="text" name="card_number" placeholder="Card Number">
+                <input type="text" name="expiry_date" placeholder="Expiry Date (MM/YY)">
+                <input type="password" name="cvv" placeholder="CVV">
+            </div>
+            <button type="submit" class="btn">Proceed with Payment</button>
+        </form>
+    </div>
+    <!-- Order Summary -->
+<div class="summary-container">
+    <h3>Order Summary</h3>
+    <table>
+        <tr>
+            <th>Detail</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Hall Name</td>
+            <td>{{ selected_hall.name }}</td>
+        </tr>
+        <tr>
+            <td>Capacity</td>
+            <td>{{ selected_hall.capacity }} people</td>
+        </tr>
+        <tr>
+            <td>Total Price</td>
+            <td>₹{{ total_price }}</td>
+        </tr>
+    </table>
+    <h4>Grand Total: ₹{{ total_price }}</h4>
+</div>
+
+</div>
+
+<div id="success-message" class="success-message" style="display: none;">
+    Your booking is successful! Thank you for choosing us.
+</div>
+
+<script>
+    // Show/hide credit card details based on payment method
+    document.querySelectorAll('input[name="payment_method"]').forEach((radio) => {
+        radio.addEventListener('change', () => {
+            const creditCardDetails = document.getElementById('credit-card-details');
+            creditCardDetails.style.display = radio.value === "credit_card" ? "block" : "none";
+        });
+    });
+
+    // Display success message on form submission
+    document.getElementById('payment-form').addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent actual form submission
+        document.querySelector('.container').style.display = 'none';
+        document.getElementById('success-message').style.display = 'block';
+    });
+</script>
+
+</body>
+</html>

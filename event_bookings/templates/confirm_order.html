@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Order</title>
+</head>
+<body>
+    <h1>Confirm Your Order</h1>
+    <p>Event: {{ booking.event_name }}</p>
+    <p>Hall: {{ booking.hall.name }}</p>
+    <p>Date: {{ booking.booking_date }}</p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Proceed to Payment</button>
+    </form>
+</body>
+</html>

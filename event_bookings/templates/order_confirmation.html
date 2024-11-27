@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+</head>
+<body>
+    <h1>Order Confirmation</h1>
+    <p>Thank you for your order!</p>
+    <p><strong>Event:</strong> {{ booking.event_name }}</p>
+    <p><strong>Hall:</strong> {{ booking.hall.name }}</p>
+    <p><strong>Date:</strong> {{ booking.booking_date }}</p>
+    <p><strong>Payment Method:</strong> {{ booking.payment_method }}</p>
+    <p>Your booking has been confirmed.</p>
+</body>
+</html>

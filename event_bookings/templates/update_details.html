@@ -1,0 +1,42 @@
+<!-- templates/event_bookings/update_details.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Hall Details</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1>Update Hall Details</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        <label for="hall">Select Hall:</label>
+        <select id="hall" name="hall" onchange="this.form.submit()">
+            <option value="">Select a hall</option>
+            {% for hall in halls %}
+                <option value="{{ hall.id }}" {% if hall.id == selected_hall.id %}selected{% endif %}>{{ hall.name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    {% if selected_hall %}
+        <form method="post" action="{% url 'update_hall_details' selected_hall.id %}">
+            {% csrf_token %}
+            <label for="name">Hall Name:</label>
+            <input type="text" id="name" name="name" value="{{ selected_hall.name }}" required>
+
+            <label for="capacity">Capacity:</label>
+            <input type="number" id="capacity" name="capacity" value="{{ selected_hall.capacity }}" required>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" value="{{ selected_hall.location }}">
+
+            <button type="submit">Update Details</button>
+        </form>
+    {% else %}
+        <p>Please select a hall to update its details.</p>
+    {% endif %}
+</body>
+</html>
