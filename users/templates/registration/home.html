@@ -1,0 +1,255 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #1a1a1a;
+        color: white;
+    }
+    
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+    
+    .logo {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+    
+    .nav a {
+        color: white;
+        margin-left: 1rem;
+        text-decoration: none;
+        font-size: 1.2rem;
+    }
+
+    .nav .logout, .nav .register {
+        background-color: red;
+        padding: 0.7rem 1.5rem;
+        border-radius: 4px;
+        color: white;
+        font-size: 1.2rem;
+        margin-left: 1rem;
+    }
+
+    .hero {
+        display: flex;
+        justify-content: space-between;
+        padding: 2rem;
+        align-items: center;
+        height: calc(100vh - 120px)
+    }
+    
+    .hero-content {
+        flex: 1;
+        padding-right: 2rem;     }
+    
+    .hero-content h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-content p {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;    }
+    
+    .categories span {
+        display: inline-block;
+        margin: 0.5rem;
+        padding: 0.5rem 1rem;
+        background-color: #333;
+        color: white;
+        border-radius: 4px;
+        font-size: 1.2rem;
+    }
+
+    .search-bar span {
+        display: inline-block;
+        margin: 0.5rem;
+        padding: 0.5rem 1rem;
+        background-color: #333;
+        color: white;
+        border-radius: 4px;
+        font-size: 1.2rem;
+    }
+       
+    .search-bar select, .search-bar button {
+        padding: 0.7rem 1.2rem;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 4px;
+    }
+    
+    .hero-images {
+        display: flex;
+        gap: 1rem;
+    }
+    
+    .hero-images img {
+        height: 300px;
+        border-radius: 8px;
+    }
+
+#events-section {
+    padding: 2rem 2rem;
+    text-align: center;
+    background-color: #222;
+    color: #f0f0f0;
+}
+
+#events-section h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #e6e6e6;
+}
+
+#events-section h3 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #ffcc00;
+}
+
+#events-section p {
+    font-size: 1.5rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-pics {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.hero-pics img {
+    max-width: 40%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+#blog-section {
+    padding: 4rem 2rem;
+    background-color: #222;
+    text-align: center;
+}
+
+.sticky-notes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.sticky-note {
+    background-color: #ffcc00;
+    width: 200px;
+    height: 250px;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    position: relative;
+    transform: rotate(-5deg);
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.sticky-note::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: #ffcc00;
+    transform: translateX(-50%) rotate(45deg);
+}
+    
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Event Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">FunEvents</div>
+            <nav class="nav">
+                <a href="{% url 'bookings:bookings' %}">Go to Bookings</a>
+                <a href="#events-section">Event</a>
+                <a href="{% url 'services' %}">View Our Services</a>
+                <a href="#blog-section">Blog</a>
+                <a href="{% url 'login' %}"class="login">Login</a>
+                <a href="{% url 'logout' %}"class="logout">Logout</a>
+            </nav>
+        </div>
+    </header>
+    <hr>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Every day is for fun and fest. Discover events now!</h1>
+            <p>Small or big, events around you or even overseas, easy planning here.</p>
+            <div class="categories">
+                <span>Business</span>
+                <span>Internal events</span>
+                <span>General public</span>
+                <span>Festival</span>
+            </div>
+            <div class="search-bar">
+                <span>Location</span>
+                <span>Capacity</span>
+                <span>Type</span>
+            </div>
+        </div>
+        <div class="hero-images">
+            <img src="https://www.pineviewhotels.com/restaurant.jpg" alt="Event Image 1">
+            <img src="http://st2.depositphotos.com/7867872/10618/i/450/depositphotos_106183332-night-club-party-event-concert-with-crowd-of-people-at-the-stage.jpg" alt="Event Image 2">
+        </div>
+    </section>
+    <section id="events-section">
+    <div class="events">
+        <br> <br> <br>  
+        <h1>Events Managament Planner!</h1><br>
+        <h3>About Us</h3> <br>
+        <p>Welcome, where your vision meets flawless execution. With years of expertise in event planning and management, we are committed to turning your ideas into unforgettable experiences. From corporate gatherings and weddings to private celebrations and large-scale public events, we take pride in delivering excellence, creativity, and personalized service every step of the way.</p><br>
+        <p>Our dedicated team of event specialists combines innovative design with meticulous attention to detail to create events that reflect your unique style and goals. We handle every aspect of the process, including planning, coordination, logistics, and on-site management, ensuring a seamless experience for you and your guests.</p>
+    </div>
+    <div class="hero-pics">
+    <img src="https://www.wtcmanila.com.ph/wp-content/uploads/2023/09/gala-dinner-preparation-tables-decorated-with-can-2023-01-04-00-44-13-utc.jpeg">
+    <img src="https://www.wtcmanila.com.ph/wp-content/uploads/2023/09/stage-lighting-2021-08-26-16-54-10-utc.jpg">
+    </div>
+</section>
+<section id="blog-section">
+    <h2>Customer Reviews</h2>
+    <div class="sticky-notes">
+        <div class="sticky-note">"FunEvents made our wedding day perfect! Everything was so well-organized. Highly recommend!" - Sarah</div>
+        <div class="sticky-note">"Amazing service, the team understood all our needs and exceeded expectations!" - John</div>
+        <div class="sticky-note">"The corporate event was seamless, thanks to the FunEvents team!" - Alex</div>
+        <div class="sticky-note">"Unforgettable experience! Thank you for making our anniversary so special!" - Lisa</div>
+        <div class="sticky-note">"The festival was an absolute blast. FunEvents really knows how to handle large-scale events!" - Mark</div>
+    </div>
+</section>
+<footer>
+    <p>&copy; 2024 Event Management</p>
+</footer>
+</body>
+</html>

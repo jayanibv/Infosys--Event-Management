@@ -1,0 +1,190 @@
+{% block content %}
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        margin: 20px 0;
+        color: #444;
+    }
+
+    .cart-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-item {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding: 15px 0;
+    }
+
+    .cart-item:last-child {
+        border-bottom: none;
+    }
+
+    .cart-item img {
+        width: 150px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-right: 20px;
+    }
+
+    .cart-item-details {
+        flex: 1;
+    }
+
+    .cart-item-details h2 {
+        margin: 0;
+        font-size: 18px;
+        color: #333;
+    }
+
+    .cart-item-details p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .cart-item-actions {
+        display: flex;
+        align-items: center;
+    }
+
+    .cart-item-actions input[type="number"] {
+        width: 50px;
+        margin-right: 10px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .cart-item-actions button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: background-color 0.3s;
+    }
+
+    .cart-item-actions button:hover {
+        background-color: #218838;
+    }
+
+    .cart-item-actions .remove-button {
+        background-color: #dc3545;
+    }
+
+    .cart-item-actions .remove-button:hover {
+        background-color: #c82333;
+    }
+
+    .cart-summary {
+        text-align: right;
+        margin-top: 20px;
+        font-size: 18px;
+        color: #333;
+    }
+
+    .cart-summary p {
+        margin: 10px 0;
+    }
+
+    .cart-summary .checkout-link {
+        display: inline-block;
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    .cart-summary .checkout-link:hover {
+        background-color: #0056b3;
+    }
+
+    .cart-summary .continue-link {
+        display: inline-block;
+        margin-left: 10px;
+        font-size: 16px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .cart-summary .continue-link:hover {
+        text-decoration: underline;
+    }
+
+    .cart-summary .place_order-link {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+    
+    .cart-summary .place_order-link:hover {
+        background-color: #0056b3;
+    }
+
+</style>
+
+<h1>Your Cart</h1>
+<div class="cart-container">
+    {% if cart_items %}
+        <ul class="cart-items">
+            {% for cart_item in cart_items %}
+                <li class="cart-item">
+                    <img src="{{ cart_item.item.image.url }}" alt="{{ cart_item.item.name }}" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <h2>{{ cart_item.item.name }}</h2>
+                        <p>Price: ₹{{ cart_item.item.price }}</p>
+                        <form action="{% url 'update_cart' cart_item.id %}" method="post" class="cart-item-actions">
+                            {% csrf_token %}
+                            <label for="quantity-{{ cart_item.id }}">Quantity:</label>
+                            <input type="number" id="quantity-{{ cart_item.id }}" name="quantity" value="{{ cart_item.quantity }}" min="1">
+                            <button type="submit">Update Quantity</button>
+                        </form>
+                        <p>Total Price: ₹{{ cart_item.total_price }}</p>
+                        <form action="{% url 'remove_from_cart' cart_item.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="remove-button">Remove</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="cart-summary">
+            <p>Total: ₹{{ total_price }}</p>
+            <a href="{% url 'checkout' %}" class="checkout-link">Back to Home</a>
+            <a href="{% url 'services' %}" class="continue-link">Continue Shopping</a>
+            <a href="{%url 'place_order'%}" class ="place_order-link">Place Order</a>
+        </div>
+    {% else %}
+        <p>Your cart is empty. <a href="{% url 'services' %}" class="continue-link">Add items</a></p>
+    {% endif %}
+</div>
+<footer>
+    <p>&copy; 2024 Event Management</p>
+</footer>
+{% endblock %}

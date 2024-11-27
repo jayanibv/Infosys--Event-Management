@@ -1,0 +1,225 @@
+<!--register.html-->
+
+<style>
+    body{
+        background-image: url('https://gpshortcuts.co.uk/images/reghere.jpg');
+        background-repeat: initial;
+        background-position: center;
+        background-size: cover;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #333;
+        margin: 0;
+    }
+
+    .form-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 2rem;
+        max-width: 500px;
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    /* Description paragraph styling */
+    p {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Form and table styling */
+    table {
+        width: 100%;
+    }
+
+    label {
+        font-weight: bold;
+        font-size: 0.9rem;
+        color: #333;
+    }
+
+    input[type="text"], 
+    input[type="email"], 
+    input[type="password"], 
+    input[type="date"], 
+    select {
+        padding: 0.8rem;
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.3s;
+        margin-top: 0.5rem;
+    }
+
+    input[type="text"]:focus, 
+    input[type="email"]:focus, 
+    input[type="password"]:focus, 
+    input[type="date"]:focus, 
+    select:focus {
+        border-color: #007bff;
+    }
+
+    /* Button styling */
+    button {
+        padding: 0.8rem;
+        width: 100%;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 1rem;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    a {
+        display: block;
+        margin-top: 1rem;
+        color: #007bff;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 1rem;
+    }
+
+    li {
+        color: #333;
+        padding: 0.5rem 0;
+    }
+
+    li.error {
+        color: red;
+    }
+
+    li.success {
+        color: green;
+    }
+</style>
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <title>Register</title>
+</head>
+
+<body>
+    <div class="form-container">
+        <center>
+        <h2>Register ✍️</h2>
+    </center>
+    <hr>
+    <p>"Get ready to make memories! Looking for a friend to help? Here we are!!! Secure your spot and let the excitement begin—register today and be part of something amazing!"</p>
+    <table>
+        <form method="POST">
+            {% csrf_token %}
+            <tr>
+            <div class="form-group">
+                <td><label for="first_name">First Name:</label></td>
+                <td><input type="text" name="first_name" placeholder="First Name" required></td>
+            </div>
+        </tr>
+        <tr>
+            <div class="form-group"></div>
+                <td><label for="last_name">Last Name:</label></td>
+                <td><input type="text" name="last_name" placeholder="Last Name"></td>
+            </div>
+        </tr>
+        <tr>
+            <div class="form-group">
+                <td><label for="email">Email:</label></td>
+                <td><input type="email" name="email" placeholder="Email" required></td>
+            </div>
+        </tr>
+        <tr>
+            <div class="form-group">
+                <td><label for="contact_number">Contact Number:</label></td>
+                <td><input type="text" name="contact_number" placeholder="Contact Number" required></td>
+            </div>
+        </tr>
+        <tr>
+            <div class="form-group">
+                <td><label for="city">City:</label></td>
+                <td><input type="text" name="city" placeholder="City" required></td>
+            </div>
+        </tr>
+        <tr>
+            <div class="form-group">
+                <td><label for="date_of_birth">Date of Birth:</label></td>
+                <td><input type="date" name="date_of_birth" placeholder="Date of Birth" required></td>
+            </div>
+        </tr>
+        <tr>
+            <div class="form-group">
+                <td><label for="gender">Gender:</label></td>
+                <td><select name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option></td>
+            </select>
+        </tr>
+        <tr>
+            <div class="form-group"></div>
+            <td><label for="username">Username:</label> </td>
+            <td><input type="text" name="username" placeholder="Username" required></td>
+            </div>
+        </tr>
+        <tr>
+            <div class="form-group"></div>
+            <td><label for="password">Password:</label></td>
+            <td><input type="password" name="password" placeholder="Password" required></td>
+            </div>
+        </tr>
+        <tr>
+            <div>
+                <td></td><td><button type="submit">Register</button></td>
+            </div>
+        </tr>
+        </form>
+    </table>
+        <!-- In your base template or the specific template like register.html or login.html -->
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <a href="{% url 'login' %}">Already have an account? Login here.</a>
+    </div>
+    <footer>
+        <p>&copy; 2024 Event Management</p>
+    </footer>
+</body>
+</html>

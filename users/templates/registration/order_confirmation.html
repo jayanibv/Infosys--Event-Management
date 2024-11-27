@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<style>
+    /* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f4f7;
+    color: #333;
+    line-height: 1.6;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #fff;
+    padding: 50px 0;
+}
+
+/* Container Styling */
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    backdrop-filter: blur(10px); /* Optional blur effect */
+}
+
+/* Header Styling */
+h1 {
+    text-align: center;
+    font-size: 3.5em;
+    color: #4caf50; /* Fresh green color */
+    margin-bottom: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Thank You Message Styling */
+.thank-you {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #4caf50;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Order Details Section */
+.order-details {
+    margin: 30px 0;
+    text-align: center;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.order-details p {
+    margin: 15px 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.order-details span {
+    font-weight: bold;
+    color: #000;
+}
+
+/* Order Items Section */
+.order-items {
+    margin-top: 30px;
+}
+
+.order-items h2 {
+    text-align: center;
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Links Styling */
+a {
+    text-decoration: none;
+    color: #4caf50;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #3e8e41;
+    text-decoration: underline;
+}
+
+/* Buttons */
+button {
+    background-color: #4caf50;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #388e3c;
+}
+
+/* Order Items List */
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    text-align: center;
+}
+
+ul li {
+    font-size: 1.1em;
+    padding: 10px;
+    margin: 5px 0;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+
+ul li:last-child {
+    border-bottom: none;
+}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2.5em;
+    }
+
+    .order-details p {
+        font-size: 1em;
+    }
+
+    .order-items h2 {
+        font-size: 1.8em;
+    }
+}
+</style>
+
+<html>
+    <head>
+        <title>Order Confirmation</title>
+    </head>
+<body>
+<div class="container">
+    <h1>Order Confirmation</h1>
+    <p class="thank-you">Thank you for your order, {{ order.user.username }}!</p>
+    <div class="order-details">
+        <p><span>Order ID:</span> {{ order.id }}</p>
+        <p><span>Total Price:</span> ₹{{ order.total_price }}</p>
+        <p><span>Date Ordered:</span> {{ order.date_ordered }}</p>
+    </div>
+    <a href="{% url 'checkout' %}" class="checkout-link">Back to Home</a>
+    <a href="{% url 'services' %}" class="continue-link">Continue Shopping</a>
+</div>
+<footer>
+    <p>&copy; 2024 Event Management</p>
+</footer>
+</body>
+</html>
